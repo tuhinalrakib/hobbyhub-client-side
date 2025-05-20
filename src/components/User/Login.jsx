@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router';
 
 const Login = () => {
@@ -30,14 +31,17 @@ const Login = () => {
                             placeholder="••••••••"
                         />
                     </div>
-
                     <div className="flex justify-between text-sm text-gray-200">
                         <label><input type="checkbox" className="mr-1" /> Remember me</label>
                         <a href="#" className="hover:underline">Forgot password?</a>
                     </div>
-
-                    <button type="submit" className="btn btn-primary w-full transition duration-300">Login</button>
-
+                    <button type="submit" className="btn btn-primary w-full transition duration-300">Login</button>    
+                    <div className="flex flex-col justify-center items-center gap-4">
+                        <button  className="flex items-center justify-center gap-2 bg-[#DB4437] hover:opacity-90 px-4 py-2 text-white rounded-md w-40 text-xl cursor-pointer">
+                            <FaGoogle size={24} />
+                            Google
+                        </button>
+                    </div>
                     <p className="mt-4 text-sm text-center text-gray-300">
                         Don't have an account?{' '}
                         <Link to="/register" className="font-semibold text-white underline hover:text-gray-200">Register</Link>

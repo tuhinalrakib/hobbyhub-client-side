@@ -25,34 +25,36 @@ const slides = [
 
 const Home = () => {
     return (
-        <div className="w-full rounded-xl overflow-hidden shadow-xl p-5">
-            <Swiper
-                modules={[Autoplay, Pagination, Navigation]}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                pagination={{ clickable: true }}
-                navigation={true}
-                loop={true}
-                className="mySwiper"
-            >
-                {slides.map((slide, idx) => (
-                    <SwiperSlide key={idx}>
-                        <div className="flex w-full h-[400px]">
-                            <div className="bg-cyan-500 bg-opacity-50 flex flex-col justify-center px-10 text-white">
-                                <h2 className="text-4xl font-bold mb-2">{slide.title}</h2>
-                                <p className="text-lg max-w-xl">{slide.description}</p>
+        <div className="min-h-screen ">
+            <div className="w-full rounded-xl overflow-hidden shadow-xl p-5">
+                <Swiper
+                    modules={[Autoplay, Pagination, Navigation]}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
+                    pagination={{ clickable: true }}
+                    navigation={true}
+                    loop={true}
+                    className="mySwiper"
+                >
+                    {slides.map((slide, idx) => (
+                        <SwiperSlide key={idx}>
+                            <div className="flex justify-center w-full h-[400px]">
+                                <div className=" bg-cyan-500 bg-opacity-50 flex flex-col justify-center px-1 md:px-10 text-white">
+                                    <h2 className="text-xl md:text-4xl font-bold mb-2">{slide.title}</h2>
+                                    <p className="text-sm md:text-lg max-w-xl">{slide.description}</p>
+                                </div>
+                                <div className="">
+                                    <img
+                                        src={slide.image}
+                                        alt={slide.title}
+                                        className="w-full h-full object-cover md:object-contain"
+                                    />
+                                </div>
+                                {/* */}
                             </div>
-                            <div>
-                                <img
-                                    src={slide.image}
-                                    alt={slide.title}
-                                    className="w-full h-full  object-contain"
-                                />
-                            </div>
-                            {/* */}
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
         </div>
     );
 };
