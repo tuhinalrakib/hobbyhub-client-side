@@ -4,8 +4,9 @@
 
 :root {
   margin: 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 a.active{
   text-decoration: underline;
 }
-

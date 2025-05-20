@@ -14,6 +14,10 @@ const Router = createBrowserRouter([
             {
                 path : "register",
                 Component : Register
+            },
+            {
+                path : "allgroup",
+                
             }
         ]
     }

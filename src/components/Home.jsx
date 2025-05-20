@@ -25,7 +25,7 @@ const slides = [
 
 const Home = () => {
     return (
-        <div className="w-full rounded-xl overflow-hidden shadow-xl m-5">
+        <div className="w-full rounded-xl overflow-hidden shadow-xl p-5">
             <Swiper
                 modules={[Autoplay, Pagination, Navigation]}
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
