@@ -1,7 +1,14 @@
 import React from 'react';
+import { NavLink } from 'react-router';
 
 const Navbar = () => {
-    
+    const links = <>
+        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
+        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
+        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
+        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
+        <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
+    </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -12,16 +19,14 @@ const Navbar = () => {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 3</a></li>
+                        {links}
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 3</a></li>
+                    {links}
                 </ul>
             </div>
             <div className="navbar-end">
