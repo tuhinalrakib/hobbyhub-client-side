@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { use } from 'react';
 import { NavLink } from 'react-router';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
+    const {user} = use(AuthContext)
+    console.log(user)
     const links = <>
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
-        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
-        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
-        <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
+        <NavLink to="/allgroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
+        <NavLink to="/creategroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
+        <NavLink to="/mygroup" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
+        { user ? "" : 
+        <>
+        <NavLink to="/login" className='px-2 py-4 hover:bg-gray-200 rounded'>Log In</NavLink>
         <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
+        </>}
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -30,7 +37,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {user ? <button className='btn'>Log Out</button> : ""}
             </div>
         </div>
     );

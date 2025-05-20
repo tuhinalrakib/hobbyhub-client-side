@@ -2,6 +2,11 @@ import { createBrowserRouter } from 'react-router';
 import HomeLayouts from '../Layouts/HomeLayouts';
 import Home from '../components/Home';
 import Register from '../components/User/Register';
+import AllGroup from '../components/AllGroup/AllGroup';
+import PrivateRoute from '../contexts/PrivateRoute';
+import Login from '../components/User/Login';
+import CreateGroup from '../components/Groups/CreateGroup';
+import MyGroup from '../components/Groups/MyGroup';
 
 
 const Router = createBrowserRouter([
@@ -16,8 +21,26 @@ const Router = createBrowserRouter([
                 Component : Register
             },
             {
+                path : "login",
+                element : <Login></Login>
+            },
+            {
                 path : "allgroup",
-                
+                element : <PrivateRoute>
+                    <AllGroup></AllGroup>
+                </PrivateRoute>
+            },
+            {
+                path : "creategroup",
+                element : <PrivateRoute>
+                    <CreateGroup></CreateGroup>
+                </PrivateRoute>
+            },
+            {
+                path : "mygroup",
+                element : <PrivateRoute>
+                    <MyGroup></MyGroup>
+                </PrivateRoute>
             }
         ]
     }

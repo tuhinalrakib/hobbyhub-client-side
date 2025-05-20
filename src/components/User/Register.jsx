@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Register = () => {
     const handleRegister = e =>{
@@ -26,8 +27,8 @@ const Register = () => {
                     {/* Password */}
                     <label className="label">Password</label>
                     <input type="password" className="input text-black" placeholder="Password" name='password'/>
-                    <div><a className="link link-hover">Forgot password?</a></div>
                     <button type="submit" className="btn btn-neutral bg-indigo-900 text-xl font-bold mt-4">Register</button>
+                    <p className='font-bold'>Already have an account ? <Link to="/login" className='text-lime-500'>Sign In</Link></p>
                 </form>
             </div>
         </div>
