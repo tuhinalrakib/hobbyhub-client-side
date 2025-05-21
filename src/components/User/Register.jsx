@@ -1,11 +1,13 @@
-import React, { use, useState } from 'react';
-import { Link, Navigate } from 'react-router';
+import React, {  useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const Register = () => {
-  const { signUpUser, setUser } = use(AuthContext)
+  const { signUpUser, setUser } = useContext(AuthContext)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -67,8 +69,16 @@ const Register = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            Navigate("/")
+            if (data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your account is created.",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              navigate("/")
+            }
           })
       })
       .catch(e => {
