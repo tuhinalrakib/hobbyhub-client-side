@@ -12,7 +12,6 @@ import MyGroup from '../components/Groups/MyGroup';
 const Router = createBrowserRouter([
     {
         path: "/",
-        loader : ()=>fetch('https://hobbyhub-server.vercel.app/'),
         Component : HomeLayouts,
         children: [
             { index: true, Component: Home },

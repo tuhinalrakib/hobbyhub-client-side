@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
-    const {user} = use(AuthContext)
+    const {user, signOutUser} = use(AuthContext)
     console.log(user)
     const links = <>
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
@@ -16,6 +16,11 @@ const Navbar = () => {
         <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
         </>}
     </>
+
+    const handleLogout = ()=>{
+        signOutUser()
+    }
+
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -37,7 +42,15 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                {user ? <button className='btn'>Log Out</button> : ""}
+                {user ?
+                    <>
+                        <div className='relative group w-[70px] h-[70px] mr-3'>
+                            <img src={user.photoURL} alt="" className='w-full h-full rounded-2xl object-cover' />
+                            <h3 className='absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300 rounded-2xl'>{user.displayName}</h3>
+                        </div>
+                        <button onClick={handleLogout} className='btn'>Log Out</button>
+                    </>
+                    : ""}
             </div>
         </div>
     );
