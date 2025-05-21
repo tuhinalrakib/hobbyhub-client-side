@@ -1,11 +1,13 @@
 import React, { use, useState } from 'react';
-import { Link, Navigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const { signUpUser, setUser } = use(AuthContext)
   const [error, setError] = useState("")
+  const navigate = useNavigate()
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -21,35 +23,43 @@ const Register = () => {
     const passswordRegExpN = /.{6,}/
 
     if (passswordRegExpN.test(password) === false) {
-      setError("Password must be more than 6 characters")
+      const message = "Password must be more than 6 characters"
+      toast(message)
+      setError(message)
       return
     } else if (passwordRegExpD.test(password) === false) {
-      setError("Passowrd must be number")
+      const message = "Passowrd must be number"
+      toast(message)
+      setError(message)
       return
     } else if (passswordRegExpL.test(password) === false) {
-      setError("Password must be at least one lowercase letter")
+      const message = "Password must be at least one lowercase letter"
+      toast(message)
+      setError(message)
       return
     } else if (passswordRegExpU.test(password) === false) {
-      setError("Passowrd must be at least one Uppercase letter")
+      const message = "Passowrd must be at least one Uppercase letter"
+      toast(message)
+      setError(message)
       return
     }
 
     const {name, photo} = restFormData
 
     signUpUser(email, password)
-      .then(result => {
-        const user = result.user
-        setUser({ ...user, displayName : name, photoURL : photo})
+    .then(result => {
+      const user = result.user
+      setUser({ ...user, displayName : name, photoURL : photo})
+
         const userProfile = {
           email,
           ...restFormData,
           creationTime: result.user?.metadata?.creationTime,
           lastSignInTime: result.user?.metadata?.lastSignInTime
         }
-        Navigate("/")
 
         // save profile info in the db
-        fetch('https://hobbyhub-server-2m0r01zop-tuhinalrakibs-projects.vercel.app/users', {
+        fetch('https://fake-server-lovat.vercel.app/users', {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -66,12 +76,13 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500
               })
+              navigate("/")
             }
           })
       })
-      .catch(e => {
-        setError(e.message)
-      })
+    .catch(e => {
+      setError(e.message)
+    })
   };
 
   return (

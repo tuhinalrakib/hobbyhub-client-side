@@ -7,12 +7,13 @@ import PrivateRoute from '../contexts/PrivateRoute';
 import Login from '../components/User/Login';
 import CreateGroup from '../components/Groups/CreateGroup';
 import MyGroup from '../components/Groups/MyGroup';
+import ErrorPage from '../components/ErrorPage';
+import Loading from '../components/Loading';
 
 
 const Router = createBrowserRouter([
     {
         path: "/",
-        loader : ()=>fetch('https://hobbyhub-server.vercel.app/'),
         Component : HomeLayouts,
         children: [
             { index: true, Component: Home },
@@ -34,7 +35,8 @@ const Router = createBrowserRouter([
                 path : "creategroup",
                 element : <PrivateRoute>
                     <CreateGroup></CreateGroup>
-                </PrivateRoute>
+                </PrivateRoute>,
+                hydrateFallbackElement : <Loading></Loading>
             },
             {
                 path : "mygroup",
@@ -43,6 +45,10 @@ const Router = createBrowserRouter([
                 </PrivateRoute>
             }
         ]
+    },
+    {
+        path : "*",
+        Component : ErrorPage
     }
 ])
 
