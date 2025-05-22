@@ -1,10 +1,16 @@
 import React, { use } from 'react';
 import { NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
+import Loading from './Loading';
 
 const Navbar = () => {
-    const {user, signOutUser} = use(AuthContext)
+    const {user, signOutUser, loading} = use(AuthContext)
     console.log(user)
+
+    if(loading){
+        return <Loading></Loading>
+    }
+
     const links = <>
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
         <NavLink to="/allgroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
@@ -34,7 +40,10 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                <div className='flex gap-1 items-center'>
+                    <img src="/logo.jpeg" className='h-[70px] w-[70px] rounded-2xl'/>
+                    <a className="btn btn-ghost hidden md:flex text-xl">Hobby Hub</a>
+                </div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

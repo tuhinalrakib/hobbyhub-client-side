@@ -7,6 +7,7 @@ import PrivateRoute from '../contexts/PrivateRoute';
 import Login from '../components/User/Login';
 import CreateGroup from '../components/Groups/CreateGroup';
 import MyGroup from '../components/Groups/MyGroup';
+import ErrorPage from '../components/ErrorPage';
 
 
 const Router = createBrowserRouter([
@@ -42,6 +43,10 @@ const Router = createBrowserRouter([
                 </PrivateRoute>
             }
         ]
+    },
+    {
+        path : "*",
+        Component : ErrorPage
     }
 ])
 

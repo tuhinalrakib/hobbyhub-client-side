@@ -1,12 +1,14 @@
-import React, {  useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
   const { signUpUser, setUser } = useContext(AuthContext)
   const [error, setError] = useState('')
+  const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
 
   const handleRegister = (e) => {
@@ -60,15 +62,15 @@ const Register = () => {
         }
 
         // send DB
-        fetch('https://hobbyhub-server.vercel.app/users', {
+        fetch('https://hobby-hub-server-ten.vercel.app/users', {
           method: "POST",
           headers: {
             "content-type": "application/json"
           },
           body: JSON.stringify(userProfile)
         })
-        .then(res => res.json())
-        .then(data => {
+          .then(res => res.json())
+          .then(data => {
             if (data.insertedId) {
               Swal.fire({
                 position: "top-end",
@@ -129,13 +131,21 @@ const Register = () => {
           {/* Password */}
           <div>
             <label className="block mb-1 text-sm font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              className="input input-bordered w-full bg-white text-black placeholder-gray-500"
-              required
-            />
+            <div className='relative'>
+              <input
+                type={visible ? "text" : "password"}
+                name="password"
+                placeholder="••••••••"
+                className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setVisible(!visible)}
+                className='absolute right-1 top-1 text-black cursor-pointer'>
+                {visible ? <FaRegEye size={24}></FaRegEye> : <FaRegEyeSlash size={24}></FaRegEyeSlash>}
+              </button>
+            </div>
           </div>
           <button type="submit" className="btn btn-primary w-full transition duration-300">
             Register

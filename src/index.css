@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@theme {
+  --color-mint-500: oklch(0.72 0.11 178);
+}
 
 :root {
   margin: 0;
