@@ -1,22 +1,28 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from './Loading';
+const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res=>res.json())
 
 const Navbar = () => {
     const {user, signOutUser, loading} = use(AuthContext)
-    console.log(user)
+    const data = use(promise)
 
     if(loading){
         return <Loading></Loading>
     }
+
+    const matchUser = data.find(item=>item.email == user.email)
 
     const links = <>
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
         <NavLink to="/allgroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
         <NavLink to="/creategroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
         <NavLink to="/mygroup" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
-        { user ? "" : 
+        { user 
+        ? 
+        <NavLink to="/user/:email" className='px-2 py-4 hover:bg-gray-200 rounded'>User Profile</NavLink> 
+        : 
         <>
         <NavLink to="/login" className='px-2 py-4 hover:bg-gray-200 rounded'>Log In</NavLink>
         <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
@@ -28,7 +34,12 @@ const Navbar = () => {
     }
 
     return (
+        
         <div className="navbar bg-base-100 shadow-sm">
+            {/* {
+                setProfile(data.find(item=> item.email == user.meail))
+            } */}
+
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -54,8 +65,8 @@ const Navbar = () => {
                 {user ?
                     <>
                         <div className='relative group w-[70px] h-[70px] mr-3'>
-                            <img src={user.photoURL} alt="" className='w-full h-full rounded-2xl object-cover' />
-                            <h3 className='absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300 rounded-2xl'>{user.displayName}</h3>
+                            <img src={matchUser.photo} alt="" className='w-full h-full rounded-2xl object-cover' />
+                            <h3 className='absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-50 duration-300 rounded-2xl'>{matchUser.name}</h3>
                         </div>
                         <button onClick={handleLogout} className='btn'>Log Out</button>
                     </>

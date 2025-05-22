@@ -52,6 +52,7 @@ const Register = () => {
     signUpUser(email, password)
       .then(result => {
         const user = result.user
+        
         setUser({ ...user, displayName: name, photoURL: photo })
 
         const userProfile = {
@@ -71,6 +72,7 @@ const Register = () => {
         })
           .then(res => res.json())
           .then(data => {
+            console.log(data)
             if (data.insertedId) {
               Swal.fire({
                 position: "top-end",

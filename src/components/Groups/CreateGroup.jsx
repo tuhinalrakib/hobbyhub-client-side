@@ -1,6 +1,7 @@
-import React, { use, useState } from "react";
+import React, { use } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Loading from "../Loading";
+const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
 
 const hobbyOptions = [
     "Drawing & Painting",
@@ -15,22 +16,41 @@ const hobbyOptions = [
 
 const CreateGroup = () => {
     const { user, loading } = use(AuthContext)
-    console.log(user)
+    const data = use(promise)
 
     if (loading) {
         return <Loading></Loading>
     }
 
-    const handleSubmit = (e) => {
+    const matchUser = data.find(item => item.email == user.email)
+    // console.log(matchUser)
+
+    const handleCreateGroup = (e) => {
         e.preventDefault();
+        const form = e.target
+        const formData = new FormData(form)
+        const allFormData = Object.fromEntries(formData.entries())
+        // console.log(allFormData)
+
         // Add API POST call here
+        fetch("https://hobby-hub-server-ten.vercel.app/groups", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(allFormData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-mint-500 to-blue-500 px-4">
-            <div className="backdrop-blur-sm bg-white/10 border border-white/30 rounded-2xl shadow-xl p-8 w-full max-w-lg md:max-w-2xl text-[#000000]">
+        <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-purple-700 via-mint-500 to-blue-500 px-4">
+            <div className="backdrop-blur-sm my-10 bg-white/10 border border-white/30 rounded-2xl shadow-xl p-8 w-full max-w-lg md:max-w-2xl text-[#000000]">
                 <h1 className="text-3xl font-bold font-playwrite text-center mb-6">Create Hobby Group</h1>
-                <form className="space-y-5">
+                <form onSubmit={handleCreateGroup} className="space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {/* Group Name */}
                         <div>
@@ -54,18 +74,9 @@ const CreateGroup = () => {
                             </select>
                         </div>
                         {/* Description */}
+
+                        {/* Meeting Location */}
                         <div>
-                            <label className="block mb-1 text-sm font-medium">Description</label>
-                            <textarea
-                                type="text"
-                                name="description"
-                                placeholder="Enter Your group description"
-                                className="w-full bg-white text-black placeholder-gray-500"
-                                required
-                            />
-                        </div>
-                        {/* Meeting Location */}
-                         <div>
                             <label className="block mb-1 text-sm font-medium">Meeting Location</label>
                             <input
                                 type="text"
@@ -75,56 +86,80 @@ const CreateGroup = () => {
                                 required
                             />
                         </div>
-                        {/* Meeting Location */}
-                         <div>
-                            <label className="block mb-1 text-sm font-medium">Meeting Location</label>
+                        {/* Max Members */}
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">Max Members</label>
                             <input
-                                type="text"
-                                name="meetingLocation"
-                                placeholder="Enter group Meeting Location"
+                                type="number"
+                                name="maxmembers"
+                                placeholder="Enter the max Members"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
                                 required
                             />
                         </div>
-                        {/* Meeting Location */}
-                         <div>
-                            <label className="block mb-1 text-sm font-medium">Meeting Location</label>
+                        {/* Start Date */}
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">Start Date</label>
                             <input
-                                type="text"
-                                name="meetingLocation"
-                                placeholder="Enter group Meeting Location"
+                                type="date"
+                                name="startdate"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
                                 required
+                            />
+                        </div>
+                        {/* Image URL */}
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">Image URL</label>
+                            <input
+                                type="url"
+                                name="photo"
+                                placeholder="https://abc.com"
+                                className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                required
+                            />
+                        </div>
+                        {/* User name */}
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">User name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                defaultValue={matchUser?.name}
+                                className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                readOnly
+                            />
+                        </div>
+                        {/* User Email */}
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">User Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                defaultValue={matchUser?.email}
+                                className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                readOnly
                             />
                         </div>
                     </div>
+                    <div>
+                        <label className="block mb-1 text-sm font-medium">Description</label>
+                        <textarea
+                            type="text"
+                            name="description"
+                            placeholder="Enter Your group description"
+                            className="w-full p-2 rounded-xl bg-white text-black placeholder-gray-500"
+                            required
+                        />
+                    </div>
                     <button type="submit" className="btn btn-primary w-full transition duration-300">
-                        Register
+                        Create
                     </button>
                 </form>
             </div>
         </div>
 
         // <form onSubmit={handleSubmit}>
-        //   <h2>Create Hobby Group</h2>
-
-        //   <label></label>
-        //   <input type="text" name="meetingLocation" value={form.meetingLocation} onChange={handleChange} required />
-
-        //   <label>Max Members</label>
-        //   <input type="number" name="maxMembers" value={form.maxMembers} onChange={handleChange} required />
-
-        //   <label>Start Date</label>
-        //   <input type="date" name="startDate" value={form.startDate} onChange={handleChange} required />
-
-        //   <label>Image URL</label>
-        //   <input type="url" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
-
-        //   <label>User Name</label>
-        //   <input type="text" name="userName" value={form.userName} readOnly />
-
-        //   <label>User Email</label>
-        //   <input type="text" name="userEmail" value={form.userEmail} readOnly />
+        //   <h>Create Hobby Group</h //
 
         //   <button type="submit">Create</button>
         // </form>

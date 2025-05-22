@@ -8,46 +8,53 @@ import Login from '../components/User/Login';
 import CreateGroup from '../components/Groups/CreateGroup';
 import MyGroup from '../components/Groups/MyGroup';
 import ErrorPage from '../components/ErrorPage';
+import UserProfile from '../components/User/UserProfile';
 
 
 const Router = createBrowserRouter([
     {
         path: "/",
-        Component : HomeLayouts,
+        Component: HomeLayouts,
         children: [
             { index: true, Component: Home },
             {
-                path : "register",
-                Component : Register
+                path: "register",
+                Component: Register
             },
             {
-                path : "login",
-                element : <Login></Login>
+                path: "login",
+                element: <Login></Login>
             },
             {
-                path : "allgroup",
-                element : <PrivateRoute>
+                path: "allgroup",
+                element: <PrivateRoute>
                     <AllGroup></AllGroup>
                 </PrivateRoute>
             },
             {
-                path : "creategroup",
-                element : <PrivateRoute>
+                path: "creategroup",
+                element: <PrivateRoute>
                     <CreateGroup></CreateGroup>
                 </PrivateRoute>
             },
             {
-                path : "mygroup",
-                element : <PrivateRoute>
+                path: "mygroup",
+                element: <PrivateRoute>
                     <MyGroup></MyGroup>
                 </PrivateRoute>
             }
         ]
     },
     {
-        path : "*",
-        Component : ErrorPage
+        path: "*",
+        Component: ErrorPage
+    },
+    {
+        path: "user/:email",
+        loader: ({ params }) => fetch(`http://localhost:3000/users/${params.email}`),
+        Component: UserProfile
     }
+
 ])
 
 export default Router;
