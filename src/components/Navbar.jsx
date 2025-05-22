@@ -20,10 +20,10 @@ const Navbar = () => {
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
         <NavLink to="/allgroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
         <NavLink to="/creategroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
-        <NavLink to="/mygroup" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
+        <NavLink to="/mygroups" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
         {user
             ?
-            <NavLink to="/user/:email" className='px-2 py-4 hover:bg-gray-200 rounded'>User Profile</NavLink>
+            ""
             :
             <>
                 <NavLink to="/login" className='px-2 py-4 hover:bg-gray-200 rounded'>Log In</NavLink>

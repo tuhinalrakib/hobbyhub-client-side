@@ -9,6 +9,7 @@ import CreateGroup from '../components/Groups/CreateGroup';
 import MyGroup from '../components/Groups/MyGroup';
 import ErrorPage from '../components/ErrorPage';
 import UserProfile from '../components/User/UserProfile';
+import GroupDetails from '../components/GroupDetails';
 
 
 const Router = createBrowserRouter([
@@ -27,6 +28,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "allgroup",
+                loader: () => fetch('https://hobby-hub-server-ten.vercel.app/groups'),
                 element: <PrivateRoute>
                     <AllGroup></AllGroup>
                 </PrivateRoute>
@@ -38,9 +40,17 @@ const Router = createBrowserRouter([
                 </PrivateRoute>
             },
             {
-                path: "mygroup",
+                path: "mygroups",
+                loader: () => fetch(`https://hobby-hub-server-ten.vercel.app/groups`),
                 element: <PrivateRoute>
                     <MyGroup></MyGroup>
+                </PrivateRoute>
+            },
+            {
+                path: "groups/:id",
+                loader: ({ params }) => fetch(`https://hobby-hub-server-ten.vercel.app/groups/${params.id}`),
+                element: <PrivateRoute>
+                    <GroupDetails></GroupDetails>
                 </PrivateRoute>
             }
         ]
@@ -48,12 +58,8 @@ const Router = createBrowserRouter([
     {
         path: "*",
         Component: ErrorPage
-    },
-    {
-        path: "user/:email",
-        loader: ({ params }) => fetch(`http://localhost:3000/users/${params.email}`),
-        Component: UserProfile
     }
+
 
 ])
 
