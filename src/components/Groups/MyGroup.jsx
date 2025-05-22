@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyGroup = () => {
     return (
-        <div>
+        <div className='min-h-screen'>
             
         </div>
     );

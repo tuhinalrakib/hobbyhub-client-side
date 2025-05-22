@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Loading from "../Loading";
+import Swal from "sweetalert2";
 const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
 
 const hobbyOptions = [
@@ -42,7 +43,16 @@ const CreateGroup = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                if (data.insertedId) {
+                   Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your group Created Suceesfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                }
+                form.reset()
             })
     };
 

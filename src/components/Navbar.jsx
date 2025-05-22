@@ -1,44 +1,43 @@
-import React, { use, useState } from 'react';
-import { NavLink } from 'react-router';
+import React, { use} from 'react';
+import { Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from './Loading';
-const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res=>res.json())
+const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
 
 const Navbar = () => {
-    const {user, signOutUser, loading} = use(AuthContext)
+    const { user, signOutUser, loading } = use(AuthContext)
     const data = use(promise)
 
-    if(loading){
+    if (loading) {
         return <Loading></Loading>
     }
 
-    const matchUser = data.find(item=>item.email == user.email)
+    if(user && user.email){
+        var matchUser = data.find(item=>item.email == user.email)
+    }
 
     const links = <>
         <NavLink to="/" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Home</NavLink>
         <NavLink to="/allgroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>All Groups</NavLink>
         <NavLink to="/creategroup" className='px-2 py-4 hover:bg-gray-200 rounded mr-3'>Create groups</NavLink>
         <NavLink to="/mygroup" className='px-2 py-4 hover:bg-gray-200 rounded'>My groups</NavLink>
-        { user 
-        ? 
-        <NavLink to="/user/:email" className='px-2 py-4 hover:bg-gray-200 rounded'>User Profile</NavLink> 
-        : 
-        <>
-        <NavLink to="/login" className='px-2 py-4 hover:bg-gray-200 rounded'>Log In</NavLink>
-        <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
-        </>}
+        {user
+            ?
+            <NavLink to="/user/:email" className='px-2 py-4 hover:bg-gray-200 rounded'>User Profile</NavLink>
+            :
+            <>
+                <NavLink to="/login" className='px-2 py-4 hover:bg-gray-200 rounded'>Log In</NavLink>
+                <NavLink to="/register" className='px-2 py-4 hover:bg-gray-200 rounded'>Register</NavLink>
+            </>}
     </>
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         signOutUser()
     }
 
     return (
-        
+
         <div className="navbar bg-base-100 shadow-sm">
-            {/* {
-                setProfile(data.find(item=> item.email == user.meail))
-            } */}
 
             <div className="navbar-start">
                 <div className="dropdown">
@@ -52,7 +51,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className='flex gap-1 items-center'>
-                    <img src="/logo.jpeg" className='h-[70px] w-[70px] rounded-2xl'/>
+                    <img src="/logo.jpeg" className='h-[70px] w-[70px] rounded-2xl' />
                     <a className="btn btn-ghost hidden md:flex text-xl">Hobby Hub</a>
                 </div>
             </div>
