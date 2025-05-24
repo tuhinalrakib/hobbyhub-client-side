@@ -1,8 +1,7 @@
-import React, { use } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import Loading from "../Loading";
-import Swal from "sweetalert2";
-const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
+import React, { use } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const hobbyOptions = [
     "Drawing & Painting",
@@ -15,52 +14,62 @@ const hobbyOptions = [
     "Writing"
 ];
 
-const CreateGroup = () => {
-    const { user, loading } = use(AuthContext)
-    const data = use(promise)
+const UpdateGroup = () => {
+    const {  loading } = use(AuthContext)
+
+    const userData = useLoaderData()
+    // console.log(userData)
+    const {
+        _id,
+        name,
+        startdate,
+        description,
+        email,
+        groupName,
+        hobbyCategory,
+        maxmembers,
+        photo,
+        meetingLocation
+
+    } = userData
 
     if (loading) {
         return <Loading></Loading>
     }
 
-    const matchUser = data.find(item => item.email == user.email)
-    // console.log(matchUser)
-
-    const handleCreateGroup = (e) => {
-        e.preventDefault();
-        const form = e.target
-        const formData = new FormData(form)
-        const allFormData = Object.fromEntries(formData.entries())
-        // console.log(allFormData)
-
-        // Add API POST call here
-        fetch("https://hobby-hub-server-ten.vercel.app/groups", {
-            method: "POST",
+    const updateGroup = e=>{
+        e.preventDefault()
+        const form = e.target;
+        const formData = new FormData(form);
+        const updatedCoffee = Object.fromEntries(formData.entries())
+        // console.log(updatedCoffee);
+        fetch(`https://hobby-hub-server-ten.vercel.app/groups/${_id}`,{
+            method: 'PUT', 
             headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(allFormData)
+                'content-type': 'application/json'
+            }, 
+            body: JSON.stringify(updatedCoffee)
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                   Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Your group Created Suceesfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }) 
-                }
-                form.reset()
-            })
-    };
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            if(data.modifiedCount){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Coffee updated successfully.",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            }
+        })
+    }
 
     return (
         <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-purple-700 via-mint-500 to-blue-500 px-4">
             <div className="backdrop-blur-sm my-10 bg-white/10 border border-white/30 rounded-2xl shadow-xl p-8 w-full max-w-lg md:max-w-2xl text-[#000000]">
-                <h1 className="text-3xl font-bold font-playwrite text-center mb-6">Create Hobby Group</h1>
-                <form onSubmit={handleCreateGroup} className="space-y-5">
+                <h1 className="text-3xl font-bold font-playwrite text-center mb-6">Update Your Group</h1>
+                <form onSubmit={updateGroup} className="space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {/* Group Name */}
                         <div>
@@ -69,6 +78,7 @@ const CreateGroup = () => {
                                 type="text"
                                 name="groupName"
                                 placeholder="Enter Your Group Name"
+                                defaultValue={groupName}
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
                                 required
                             />
@@ -76,15 +86,13 @@ const CreateGroup = () => {
                         {/* Hobby Category */}
                         <div>
                             <label className="block mb-1 text-sm font-medium">Hobby Category</label>
-                            <select name="hobbyCategory" required className="w-full bg-white text-black p-2">
+                            <select name="hobbyCategory" required className="w-full bg-white text-black p-2" defaultValue={hobbyCategory}>
                                 <option value="">Select a category</option>
                                 {hobbyOptions.map((option) => (
                                     <option key={option} value={option}>{option}</option>
                                 ))}
                             </select>
                         </div>
-                        {/* Description */}
-
                         {/* Meeting Location */}
                         <div>
                             <label className="block mb-1 text-sm font-medium">Meeting Location</label>
@@ -93,6 +101,7 @@ const CreateGroup = () => {
                                 name="meetingLocation"
                                 placeholder="Enter group Meeting Location"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                defaultValue={meetingLocation}
                                 required
                             />
                         </div>
@@ -104,6 +113,7 @@ const CreateGroup = () => {
                                 name="maxmembers"
                                 placeholder="Enter the max Members"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                defaultValue={maxmembers}
                                 required
                             />
                         </div>
@@ -114,6 +124,7 @@ const CreateGroup = () => {
                                 type="date"
                                 name="startdate"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                defaultValue={startdate}
                                 required
                             />
                         </div>
@@ -125,6 +136,7 @@ const CreateGroup = () => {
                                 name="photo"
                                 placeholder="https://abc.com"
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                defaultValue={photo}
                                 required
                             />
                         </div>
@@ -134,7 +146,7 @@ const CreateGroup = () => {
                             <input
                                 type="text"
                                 name="name"
-                                defaultValue={matchUser?.name}
+                                defaultValue={name}
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
                                 readOnly
                             />
@@ -145,12 +157,13 @@ const CreateGroup = () => {
                             <input
                                 type="email"
                                 name="email"
-                                defaultValue={matchUser?.email}
+                                defaultValue={email}
                                 className="input input-bordered w-full bg-white text-black placeholder-gray-500"
                                 readOnly
                             />
                         </div>
                     </div>
+                     {/* Description */}
                     <div>
                         <label className="block mb-1 text-sm font-medium">Description</label>
                         <textarea
@@ -158,11 +171,12 @@ const CreateGroup = () => {
                             name="description"
                             placeholder="Enter Your group description"
                             className="w-full p-2 rounded-xl bg-white text-black placeholder-gray-500"
+                            defaultValue={description}
                             required
                         />
                     </div>
                     <button type="submit" className="btn btn-primary w-full transition duration-300">
-                        Create
+                        Update
                     </button>
                 </form>
             </div>
@@ -170,4 +184,4 @@ const CreateGroup = () => {
     );
 };
 
-export default CreateGroup;
+export default UpdateGroup;

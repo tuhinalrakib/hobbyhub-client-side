@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from './Loading';
+import { Tooltip } from 'react-tooltip'
 const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
 
 const Navbar = () => {
@@ -19,7 +20,7 @@ const Navbar = () => {
     if (user && user.email) {
         var matchUser = data.find(item => item.email == user.email)
     }
-    console.log(user)
+    console.log(user.photURL)
 
 
 
@@ -81,10 +82,16 @@ const Navbar = () => {
                         <button onClick={handleLogout} className='btn'>Log Out</button>
                     </>
                     : ""}
-                <button className="btn btn-active" onClick={toggleTheme}>
-                     {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+                <button className="btn btn-active" onClick={toggleTheme} data-tooltip-id="my-tooltip" data-tooltip-content="Change theme">
+                    {theme === "light" ? "🌙 Dark" : "☀️ Light"}
                 </button>
             </div>
+            <Tooltip
+                id="my-tooltip"
+                place="bottom"
+                style={{ backgroundColor: 'black', color: 'white' }}
+            />
+
         </div>
     );
 };

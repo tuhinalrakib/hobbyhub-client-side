@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Drawing & Painting",
+    "description": "Express your creativity with weekly drawing and painting meetups.",
+    "imageUrl": "https://i.postimg.cc/bJx03j9q/3bpg-j740-170328.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Photography",
+    "description": "Capture the world through your lens with our photography enthusiasts.",
+    "imageUrl": "https://i.postimg.cc/W3D2m2GH/9206143.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Video Gaming",
+    "description": "Join a vibrant community of gamers for regular tournaments and fun.",
+    "imageUrl": "https://i.postimg.cc/ncW6y6Dv/pexels-mayday-1365795.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Fishing",
+    "description": "Relax and connect with nature on group fishing trips.",
+    "imageUrl": "https://i.postimg.cc/j5QG72CT/pexels-lum3n-44775-294674.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Running",
+    "description": "Stay fit and motivated with weekly group runs.",
+    "imageUrl": "https://i.postimg.cc/KYJm60rB/pexels-samsilitongajr-694587.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Cooking",
+    "description": "Share recipes and learn new dishes with fellow food lovers.",
+    "imageUrl": "https://i.postimg.cc/MZyzxZDz/pexels-mvdheuvel-2284166.jpg"
+  }
+]

@@ -10,6 +10,7 @@ import MyGroup from '../components/Groups/MyGroup';
 import ErrorPage from '../components/ErrorPage';
 import UserProfile from '../components/User/UserProfile';
 import GroupDetails from '../components/GroupDetails';
+import UpdateGroup from '../components/Groups/UpdateGroup';
 
 
 const Router = createBrowserRouter([
@@ -48,10 +49,15 @@ const Router = createBrowserRouter([
             },
             {
                 path: "groups/:id",
-                loader: ({ params }) => fetch(`https://hobby-hub-server-ten.vercel.app/groups/${params.id}`),
                 element: <PrivateRoute>
                     <GroupDetails></GroupDetails>
                 </PrivateRoute>
+            },
+            {
+                path: "updateGroup/:id",
+                loader: ({ params }) => fetch(`https://hobby-hub-server-ten.vercel.app/groups/${params.id}`),
+                // loader: () => fetch(`https://hobby-hub-server-ten.vercel.app/groups`),
+                element: <PrivateRoute><UpdateGroup /></PrivateRoute>
             }
         ]
     },

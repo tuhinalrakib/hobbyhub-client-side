@@ -1,18 +1,26 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 
 const GroupCard = ({ group }) => {
-    const location = useLocation()
+    const location = useLocation();
     const {
         _id,
         groupName,
         hobbyCategory,
         maxmembers,
         meetingLocation,
-        photo
+        photo,
+        startdate
     } = group;
-    // console.log(_id)
+    console.log(group)
+
+    const isGroupActive = new Date(startdate) > new Date(); 
+
+    const handleJoin = ()=>{
+        toast("You Join This Group Successfully")
+    }
 
     return (
         <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
@@ -33,7 +41,20 @@ const GroupCard = ({ group }) => {
                     <div><span className="font-semibold">Max Members:</span> {maxmembers}</div>
                     <div><span className="font-semibold">Location:</span> {meetingLocation}</div>
                 </div>
-                <Link to={`/groups/${_id}`}><button className='btn bg-fuchsia-900 w-full text-xl font-semibold text-white'>View Details</button></Link>
+                <Link to={`/groups/${_id}`}>
+                    <button className='btn bg-fuchsia-900 w-full text-xl font-semibold text-white mb-2'>
+                        View Details
+                    </button>
+                </Link>
+                {isGroupActive ? (
+                        <button onClick={handleJoin} className='btn bg-green-700 w-full text-lg font-semibold text-white'>
+                            Join Group
+                        </button>
+                ) : (
+                    <p className="text-center text-red-600 font-medium mt-2">
+                        This group is no longer active.
+                    </p>
+                )}
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 // import Lottie from 'lottie-react';
 
 const MyGroup = () => {
@@ -8,6 +9,44 @@ const MyGroup = () => {
     const { user } = useContext(AuthContext);
 
     const userGroups = data.filter(item => item.email === user.email);
+
+    const handleDelete = (_id) => {
+        console.log(_id);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            console.log(result.isConfirmed)
+            if (result.isConfirmed) {
+
+                // start deleting the coffee
+                fetch(`https://hobby-hub-server-ten.vercel.app/groups/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Coffee has been deleted.",
+                                icon: "success"
+                            });
+
+                            
+                        }
+                    })
+
+
+            }
+        });
+
+    }
 
     return (
         <div className='min-h-screen p-4'>
@@ -31,13 +70,10 @@ const MyGroup = () => {
                                     <td className="py-2 px-4">{group.hobbyCategory}</td>
                                     <td className="py-2 px-4">{group.maxmembers}</td>
                                     <td className="py-2 px-4">{group.meetingLocation}</td>
-                                    <td className="py-2 px-4">
-                                        <a 
-                                            href={`/groups/${group._id}`}
-                                            className="text-fuchsia-900 underline"
-                                        >
-                                            View
-                                        </a>
+                                    <td className="py-2 px-4 space-x-1">
+                                        <Link to={`/groups/${group._id}`}><button className='btn btn-xs'>View</button></Link>
+                                        <Link to={`/updateGroup/${group._id}`}><button className='btn btn-xs'>Edit</button></Link>
+                                        <button onClick={()=>handleDelete(group._id)} className='btn btn-xs'>X</button>
                                     </td>
                                 </tr>
                             ))}
