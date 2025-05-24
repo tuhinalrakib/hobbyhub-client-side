@@ -1,20 +1,16 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-import Lottie from 'lottie-react';
-import animationData from './group-animation.json'; // your Lottie JSON file
+import { useLoaderData } from 'react-router';
+// import Lottie from 'lottie-react';
 
 const MyGroup = () => {
-    const data = useLoaderData();
+    const data = useLoaderData()
     const { user } = useContext(AuthContext);
 
     const userGroups = data.filter(item => item.email === user.email);
 
     return (
         <div className='min-h-screen p-4'>
-            <div className='w-full max-w-2xl mx-auto mb-8'>
-                <Lottie animationData={animationData} loop={true} />
-            </div>
 
             {userGroups.length > 0 ? (
                 <div className="overflow-x-auto w-[90%] mx-auto">

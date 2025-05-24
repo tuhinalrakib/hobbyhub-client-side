@@ -8,10 +8,10 @@ import { useLoaderData } from 'react-router';
 
 const AllGroup = () => {
     const {loading} = use(AuthContext)
+    const data = useLoaderData()
     if(loading){
         return <Loading></Loading>
     }
-    const data = useLoaderData()
 
     return (
         <div className='min-h-screen'>

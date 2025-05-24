@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    const { signInUser, setUser } = use(AuthContext)
+    const { signInUser, setUser, googleLogin } = use(AuthContext)
     const [error, setError] = useState("")
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
@@ -36,6 +36,15 @@ const Login = () => {
             })
 
     };
+
+    const handleSignInGoogle = () => {
+        googleLogin()
+            .then(result => {
+                const user = result.user
+                setUser(user)
+                navigate("/")
+            })
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-600 to-blue-500 px-4">
@@ -77,13 +86,7 @@ const Login = () => {
                         <a href="#" className="hover:underline">Forgot password?</a>
                     </div>
                     <button type="submit" className="btn btn-primary w-full transition duration-300">Login</button>
-                    <div className="flex flex-col justify-center items-center gap-4">
-                        <button className="flex items-center justify-center gap-2 bg-[#DB4437] hover:opacity-90 px-4 py-2 text-white rounded-md w-70 text-xl cursor-pointer">
-                            <FaGoogle size={24} />
-                            Sign Up With Google
-                        </button>
-                    </div>
-                    <p className="mt-4 text-sm text-center text-gray-300">
+                    <p className="my-2 text-sm text-center text-gray-300">
                         Don't have an account?{' '}
                         <Link to="/register" className="font-semibold text-white underline hover:text-gray-200">Register</Link>
                     </p>
@@ -91,6 +94,12 @@ const Login = () => {
                         error && <p className='text-purple-900 text-center'>{error}</p>
                     }
                 </form>
+                    <div className="flex flex-col mt-2 justify-center items-center gap-4">
+                        <button onClick={handleSignInGoogle} className="flex items-center justify-center gap-2 bg-[#DB4437] hover:opacity-90 px-4 py-2 text-white rounded-md w-70 text-xl cursor-pointer">
+                            <FaGoogle size={24} />
+                            Sign Up With Google
+                        </button>
+                    </div>
             </div>
         </div>
     );
