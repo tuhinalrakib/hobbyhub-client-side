@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
-  const { signUpUser, setUser } = useContext(AuthContext)
+  const { signUpUser } = useContext(AuthContext)
   const [error, setError] = useState('')
   const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
@@ -16,8 +16,6 @@ const Register = () => {
     const form = e.target;
     const formData = new FormData(form);
     const { email, password, ...restFormData } = Object.fromEntries(formData.entries());
-    // console.log(email, password);
-    console.log(restFormData);
 
     // Password Validation
     const passwordRegExpD = /(?=.*\d)/
@@ -46,14 +44,11 @@ const Register = () => {
       toast(message)
       return
     }
-    const { name, photo } = restFormData
 
     // firebase SignUp
     signUpUser(email, password)
       .then(result => {
         const user = result.user
-        
-        setUser({ ...user, displayName: name, photoURL: photo })
 
         const userProfile = {
           email,
@@ -63,7 +58,7 @@ const Register = () => {
         }
 
         // send DB
-        fetch('https://hobby-hub-server-ten.vercel.app/users', {
+        fetch('https://hobbyhub-server.onrender.com/users', {
           method: "POST",
           headers: {
             "content-type": "application/json"
@@ -72,7 +67,6 @@ const Register = () => {
         })
           .then(res => res.json())
           .then(data => {
-            // console.log(data)
             if (data.insertedId) {
               Swal.fire({
                 position: "top-end",

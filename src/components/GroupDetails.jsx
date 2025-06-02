@@ -12,10 +12,8 @@ const GroupDetails = () => {
         maxmembers,
         meetingLocation,
         name,
-        startdate,
         photo
     } = data;
-    console.log(data)
     return (
         <div className="max-w-sm mx-auto my-10 bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
             <Helmet>

@@ -5,22 +5,21 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    const { signInUser, setUser, googleLogin } = use(AuthContext)
+    const { signInUser, googleLogin } = use(AuthContext)
     const [error, setError] = useState("")
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
-    // console.log(signInUser)
 
     const handleLogin = e => {
         e.preventDefault();
         const form = e.target
         const formData = new FormData(form)
         const { email, password } = Object.fromEntries(formData.entries())
-        // console.log(email, password)
 
         signInUser(email, password)
             .then(result => {
                 const user = result.user
+                console.log(user)
                 Swal.fire({
                     icon: "success",
                     position: "center",
@@ -28,7 +27,6 @@ const Login = () => {
                     title: "Login Successfully",
                     timer: 1500
                 })
-                setUser(user)
                 navigate("/")
             })
             .catch(e => {
@@ -41,7 +39,7 @@ const Login = () => {
         googleLogin()
             .then(result => {
                 const user = result.user
-                setUser(user)
+                console.log(user)
                 navigate("/")
             })
     }

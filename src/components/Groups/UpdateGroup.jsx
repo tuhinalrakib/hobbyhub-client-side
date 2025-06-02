@@ -15,10 +15,9 @@ const hobbyOptions = [
 ];
 
 const UpdateGroup = () => {
-    const {  loading } = use(AuthContext)
+    const { loading } = use(AuthContext)
 
     const userData = useLoaderData()
-    // console.log(userData)
     const {
         _id,
         name,
@@ -37,32 +36,30 @@ const UpdateGroup = () => {
         return <Loading></Loading>
     }
 
-    const updateGroup = e=>{
+    const updateGroup = e => {
         e.preventDefault()
         const form = e.target;
         const formData = new FormData(form);
         const updatedCoffee = Object.fromEntries(formData.entries())
-        // console.log(updatedCoffee);
-        fetch(`https://hobby-hub-server-ten.vercel.app/groups/${_id}`,{
-            method: 'PUT', 
+        fetch(`https://hobbyhub-server.onrender.com/groups/${_id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
-            }, 
+            },
             body: JSON.stringify(updatedCoffee)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-            if(data.modifiedCount){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Coffee updated successfully.",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Coffee updated successfully.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     return (
@@ -163,7 +160,7 @@ const UpdateGroup = () => {
                             />
                         </div>
                     </div>
-                     {/* Description */}
+                    {/* Description */}
                     <div>
                         <label className="block mb-1 text-sm font-medium">Description</label>
                         <textarea

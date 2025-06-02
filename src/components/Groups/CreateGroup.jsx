@@ -2,7 +2,8 @@ import React, { use } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Loading from "../Loading";
 import Swal from "sweetalert2";
-const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
+import { useNavigate } from "react-router";
+const promise = fetch("https://hobbyhub-server.onrender.com/users").then(res => res.json())
 
 const hobbyOptions = [
     "Drawing & Painting",
@@ -18,23 +19,22 @@ const hobbyOptions = [
 const CreateGroup = () => {
     const { user, loading } = use(AuthContext)
     const data = use(promise)
+    const navigate = useNavigate()
 
     if (loading) {
         return <Loading></Loading>
     }
 
     const matchUser = data.find(item => item.email == user.email)
-    // console.log(matchUser)
 
     const handleCreateGroup = (e) => {
         e.preventDefault();
         const form = e.target
         const formData = new FormData(form)
         const allFormData = Object.fromEntries(formData.entries())
-        // console.log(allFormData)
 
         // Add API POST call here
-        fetch("https://hobby-hub-server-ten.vercel.app/groups", {
+        fetch("https://hobbyhub-server.onrender.com/groups", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -44,15 +44,16 @@ const CreateGroup = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.insertedId) {
-                   Swal.fire({
+                    Swal.fire({
                         position: "center",
                         icon: "success",
                         title: "Your group Created Suceesfully",
                         showConfirmButton: false,
                         timer: 1500
-                    }) 
+                    })
                 }
                 form.reset()
+                navigate("/mygroups")
             })
     };
 

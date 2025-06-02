@@ -14,8 +14,6 @@ const firebaseConfig = {
   appId : import.meta.env.VITE_appId
 };
 
-// console.log("API Key:", import.meta.env.VITE_authDomain); // should not be undefined
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)

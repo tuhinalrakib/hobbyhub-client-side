@@ -3,7 +3,6 @@ const promise = fetch("/featuredGroupsData.json").then(res=>res.json())
 
 const FeaturedGroups = () => {
     const featuredGroups = use(promise)
-    console.log(featuredGroups)
 
   return (
     <section className="py-10 bg-gray-50">

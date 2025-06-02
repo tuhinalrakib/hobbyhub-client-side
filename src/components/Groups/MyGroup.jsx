@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { Link, useLoaderData } from 'react-router';
+import { Link, useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 // import Lottie from 'lottie-react';
 
 const MyGroup = () => {
     const data = useLoaderData()
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate()
 
     const userGroups = data.filter(item => item.email === user.email);
 
     const handleDelete = (_id) => {
-        console.log(_id);
-
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -22,11 +21,10 @@ const MyGroup = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-            console.log(result.isConfirmed)
             if (result.isConfirmed) {
 
                 // start deleting the coffee
-                fetch(`https://hobby-hub-server-ten.vercel.app/groups/${_id}`, {
+                fetch(`https://hobbyhub-server.onrender.com/groups/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -38,7 +36,7 @@ const MyGroup = () => {
                                 icon: "success"
                             });
 
-                            
+                            navigate("/")
                         }
                     })
 
@@ -49,31 +47,31 @@ const MyGroup = () => {
     }
 
     return (
-        <div className='min-h-screen p-4'>
+        <div className='min-h-screen p-4 '>
 
             {userGroups.length > 0 ? (
                 <div className="overflow-x-auto w-[90%] mx-auto">
-                    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <table className="table shadow-md rounded-lg overflow-hidden">
                         <thead className="bg-fuchsia-900 text-white">
                             <tr>
-                                <th className="py-2 px-4 text-left">Group Name</th>
-                                <th className="py-2 px-4 text-left">Category</th>
-                                <th className="py-2 px-4 text-left">Max Members</th>
-                                <th className="py-2 px-4 text-left">Location</th>
-                                <th className="py-2 px-4 text-left">Actions</th>
+                                <th className="text-left">Group Name</th>
+                                <th className="text-left">Category</th>
+                                <th className="text-left">Max Members</th>
+                                <th className="text-left">Location</th>
+                                <th className="text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {userGroups.map(group => (
-                                <tr key={group._id} className="border-t">
-                                    <td className="py-2 px-4">{group.groupName}</td>
-                                    <td className="py-2 px-4">{group.hobbyCategory}</td>
-                                    <td className="py-2 px-4">{group.maxmembers}</td>
-                                    <td className="py-2 px-4">{group.meetingLocation}</td>
-                                    <td className="py-2 px-4 space-x-1">
-                                        <Link to={`/groups/${group._id}`}><button className='btn btn-xs'>View</button></Link>
-                                        <Link to={`/updateGroup/${group._id}`}><button className='btn btn-xs'>Edit</button></Link>
-                                        <button onClick={()=>handleDelete(group._id)} className='btn btn-xs'>X</button>
+                                <tr key={group._id} className="border-t bg-base-200">
+                                    <td >{group.groupName}</td>
+                                    <td >{group.hobbyCategory}</td>
+                                    <td >{group.maxmembers}</td>
+                                    <td >{group.meetingLocation}</td>
+                                    <td className="join join-vertical space-y-1">
+                                        <Link to={`/groups/${group._id}`}><button className='btn btn-xs join-item'>View</button></Link>
+                                        <Link to={`/updateGroup/${group._id}`}><button className='btn btn-xs join-item'>Edit</button></Link>
+                                        <button onClick={() => handleDelete(group._id)} className='btn btn-xs join-item'>X</button>
                                     </td>
                                 </tr>
                             ))}
@@ -90,3 +88,27 @@ const MyGroup = () => {
 };
 
 export default MyGroup;
+
+
+{/* <div className="overflow-x-auto">
+  <table className="table">
+    {/* head */}
+    // <thead>
+    //   <tr>
+    //     <th></th>
+    //     <th>Name</th>
+    //     <th>Job</th>
+    //     <th>Favorite Color</th>
+    //   </tr>
+    // </thead>
+    // <tbody>
+    //   {/* row 1 */}
+    //   <tr>
+    //     <th>1</th>
+    //     <td>Cy Ganderton</td>
+    //     <td>Quality Control Specialist</td>
+    //     <td>Blue</td>
+    //   </tr>
+    // </tbody>
+//   </table>
+// </div> */}

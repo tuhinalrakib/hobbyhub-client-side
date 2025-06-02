@@ -14,7 +14,6 @@ const GroupCard = ({ group }) => {
         photo,
         startdate
     } = group;
-    console.log(group)
 
     const isGroupActive = new Date(startdate) > new Date(); 
 

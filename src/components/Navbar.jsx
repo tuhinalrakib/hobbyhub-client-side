@@ -3,25 +3,21 @@ import { Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from './Loading';
 import { Tooltip } from 'react-tooltip'
-const promise = fetch("https://hobby-hub-server-ten.vercel.app/users").then(res => res.json())
 
-const Navbar = () => {
+
+
+
+const Navbar = ({userData}) => {
     const { user, signOutUser, loading } = use(AuthContext)
     const [theme, setTheme] = useState("light");
-    const data = use(promise)
+    
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);
     }, [theme]);
 
-    if (loading) {
+    if (loading ) {
         return <Loading></Loading>
     }
-
-    if (user && user.email) {
-        var matchUser = data.find(item => item.email == user.email)
-    }
-    console.log(user.photURL)
-
 
 
     const toggleTheme = () => {
@@ -76,13 +72,13 @@ const Navbar = () => {
                 {user ?
                     <>
                         <div className='relative group w-[70px] h-[70px] mr-3'>
-                            <img src={user.photoURL ? user.photoURL : matchUser.photo} alt="" className='w-full h-full rounded-2xl object-cover' />
-                            <h3 className='absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-50 duration-300 rounded-2xl'>{user.displayName ? user.displayName : matchUser.name}</h3>
+                            <img src={userData?.photo} alt="" className='w-full h-full rounded-2xl object-cover' />
+                            <h3 className='absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-50 duration-300 rounded-2xl'>{userData?.name}</h3>
                         </div>
-                        <button onClick={handleLogout} className='btn'>Log Out</button>
+                        <button onClick={handleLogout} className='btn btn-sm md:btn'>Log Out</button>
                     </>
                     : ""}
-                <button className="btn btn-active" onClick={toggleTheme} data-tooltip-id="my-tooltip" data-tooltip-content="Change theme">
+                <button className="btn-sm md:btn btn-active" onClick={toggleTheme} data-tooltip-id="my-tooltip" data-tooltip-content="Change theme">
                     {theme === "light" ? "🌙 Dark" : "☀️ Light"}
                 </button>
             </div>

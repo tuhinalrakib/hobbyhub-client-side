@@ -6,13 +6,11 @@ import Loading from '../Loading';
 
 const UserProfile = () => {
     const {loading} = use(AuthContext)
-    const data = useLoaderData()
 
     if(loading){
         return <Loading></Loading>
     }
 
-    console.log(data)
     return (
         <div>
           <Navbar></Navbar>  

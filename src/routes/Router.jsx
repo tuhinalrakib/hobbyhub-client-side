@@ -11,12 +11,14 @@ import ErrorPage from '../components/ErrorPage';
 import UserProfile from '../components/User/UserProfile';
 import GroupDetails from '../components/GroupDetails';
 import UpdateGroup from '../components/Groups/UpdateGroup';
+import Loading from '../components/Loading';
 
 
 const Router = createBrowserRouter([
     {
         path: "/",
         Component: HomeLayouts,
+        hydrateFallbackElement: <Loading></Loading>,
         children: [
             { index: true, Component: Home },
             {
@@ -29,10 +31,11 @@ const Router = createBrowserRouter([
             },
             {
                 path: "allgroup",
-                loader: () => fetch('https://hobby-hub-server-ten.vercel.app/groups'),
+                loader: () => fetch('https://hobbyhub-server.onrender.com/groups'),
                 element: <PrivateRoute>
                     <AllGroup></AllGroup>
-                </PrivateRoute>
+                </PrivateRoute>,
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: "creategroup",
@@ -42,22 +45,26 @@ const Router = createBrowserRouter([
             },
             {
                 path: "mygroups",
-                loader: () => fetch(`https://hobby-hub-server-ten.vercel.app/groups`),
+                loader: () => fetch(`https://hobbyhub-server.onrender.com/groups`),
                 element: <PrivateRoute>
                     <MyGroup></MyGroup>
-                </PrivateRoute>
+                </PrivateRoute>,
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: "groups/:id",
+                loader: ({ params }) => fetch(`https://hobbyhub-server.onrender.com/groups/${params.id}`),
                 element: <PrivateRoute>
                     <GroupDetails></GroupDetails>
-                </PrivateRoute>
+                </PrivateRoute>,
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: "updateGroup/:id",
-                loader: ({ params }) => fetch(`https://hobby-hub-server-ten.vercel.app/groups/${params.id}`),
-                // loader: () => fetch(`https://hobby-hub-server-ten.vercel.app/groups`),
-                element: <PrivateRoute><UpdateGroup /></PrivateRoute>
+                loader: ({ params }) => fetch(`https://hobbyhub-server.onrender.com/groups/${params.id}`),
+                // loader: () => fetch(`https://hobbyhub-server.onrender.com/groups`),
+                element: <PrivateRoute><UpdateGroup /></PrivateRoute>,
+                hydrateFallbackElement: <Loading></Loading>
             }
         ]
     },
