@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 
 const hobbyOptions = [
@@ -16,6 +16,7 @@ const hobbyOptions = [
 
 const UpdateGroup = () => {
     const { loading } = use(AuthContext)
+    const navigate = useNavigate()
 
     const userData = useLoaderData()
     const {
@@ -52,12 +53,13 @@ const UpdateGroup = () => {
             .then(data => {
                 if (data.modifiedCount) {
                     Swal.fire({
-                        position: "top-end",
+                        position: "center",
                         icon: "success",
-                        title: "Coffee updated successfully.",
+                        title: "Your Group updated successfully.",
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate("/mygroups")
                 }
             })
     }
