@@ -10,7 +10,7 @@ const Navbar = () => {
     const [data, setData] = useState(null);
     const [subscriptionLoading, setSubscriptionLoading] = useState(true);
    
-
+    console.log(user)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -94,6 +94,7 @@ const Navbar = () => {
                         <button onClick={handleLogout} className="btn btn-sm md:btn">Log Out</button>
                     </>
                 )}
+                {/* <button onClick={handleLogout} className="btn btn-sm md:btn">Log Out</button> */}
                 <button className="btn-sm md:btn btn-active" onClick={toggleTheme} data-tooltip-id="my-tooltip" data-tooltip-content="Change theme">
                     {theme === "light" ? "🌙 Dark" : "☀️ Light"}
                 </button>

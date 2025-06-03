@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 const hobbyOptions = [
     "Drawing & Painting",
@@ -66,6 +67,10 @@ const UpdateGroup = () => {
 
     return (
         <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-purple-700 via-mint-500 to-blue-500 px-4">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Create Group</title>
+            </Helmet>
             <div className="backdrop-blur-sm my-10 bg-white/10 border border-white/30 rounded-2xl shadow-xl p-8 w-full max-w-lg md:max-w-2xl text-[#000000]">
                 <h1 className="text-3xl font-bold font-playwrite text-center mb-6">Update Your Group</h1>
                 <form onSubmit={updateGroup} className="space-y-5">

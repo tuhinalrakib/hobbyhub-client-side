@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { Helmet } from 'react-helmet';
 
 const Register = () => {
   const { signUpUser } = useContext(AuthContext)
@@ -11,81 +12,100 @@ const Register = () => {
   const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
+    
     const form = e.target;
     const formData = new FormData(form);
     const { email, password, ...restFormData } = Object.fromEntries(formData.entries());
 
     // Password Validation
-    const passwordRegExpD = /(?=.*\d)/
-    const passswordRegExpL = /(?=.*[a-z])/
-    const passswordRegExpU = /(?=.*[A-Z])/
-    const passswordRegExpN = /.{6,}/
+    const hasNumber = /(?=.*\d)/;
+    const hasLowercase = /(?=.*[a-z])/;
+    const hasUppercase = /(?=.*[A-Z])/;
+    const hasMinLength = /.{6,}/;
 
-    if (passswordRegExpN.test(password) === false) {
-      const message = "Password must be more than 6 characters"
-      setError(message)
-      toast(message)
-      return
-    } else if (passwordRegExpD.test(password) === false) {
-      const message = "Passowrd must be number"
-      setError(message)
-      toast(message)
-      return
-    } else if (passswordRegExpL.test(password) === false) {
-      const message = "Password must be at least one lowercase letter"
-      setError(message)
-      toast(message)
-      return
-    } else if (passswordRegExpU.test(password) === false) {
-      const message = "Passowrd must be at least one Uppercase letter"
-      setError(message)
-      toast(message)
-      return
+    if (!hasMinLength.test(password)) {
+      const message = "Password must be at least 6 characters long";
+      setError(message);
+      toast.error(message);
+      return;
+    }
+    if (!hasNumber.test(password)) {
+      const message = "Password must contain at least one number";
+      setError(message);
+      toast.error(message);
+      return;
+    }
+    if (!hasLowercase.test(password)) {
+      const message = "Password must contain at least one lowercase letter";
+      setError(message);
+      toast.error(message);
+      return;
+    }
+    if (!hasUppercase.test(password)) {
+      const message = "Password must contain at least one uppercase letter";
+      setError(message);
+      toast.error(message);
+      return;
     }
 
-    // firebase SignUp
-    signUpUser(email, password)
-      .then(result => {
-        const user = result.user
+    try {
+      const res = await fetch(`https://hobbyhub-server.onrender.com/users`);
+      const existingUsers = await res.json();
+      const existingUser = existingUsers.find(user => user.email === email);
 
-        const userProfile = {
-          email,
-          ...restFormData,
-          creationTime: user?.metadata?.creationTime,
-          lastSignInTime: user?.metadata?.lastSignInTime
-        }
+      if (existingUser) {
+        const message = "User already exists";
+        setError(message);
+        toast.error(message);
+        return navigate("/login");
+      }
 
-        // send DB
-        fetch('https://hobbyhub-server.onrender.com/users', {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify(userProfile)
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.insertedId) {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Your account is created.",
-                showConfirmButton: false,
-                timer: 1500
-              })
-              navigate("/")
-            }
-          })
-      })
-      .catch(e => {
-        setError(e.message)
-      })
+      // Firebase Sign Up
+      const result = await signUpUser(email, password);
+      const user = result.user;
+
+      const userProfile = {
+        email,
+        ...restFormData,
+        creationTime: user?.metadata?.creationTime,
+        lastSignInTime: user?.metadata?.lastSignInTime,
+      };
+
+      // Save to DB
+      const dbRes = await fetch('https://hobbyhub-server.onrender.com/users', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userProfile),
+      });
+
+      const dbData = await dbRes.json();
+
+      if (dbData.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your account has been created.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Registration failed.");
+      toast.error(err.message || "Something went wrong.");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-600 to-blue-500 px-4 py-5">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Register Page</title>
+      </Helmet>
       <div className="backdrop-blur-sm bg-white/10 border border-white/30 rounded-2xl shadow-xl p-8 w-full max-w-md text-white">
         <h1 className="text-3xl font-bold text-center mb-6">Register Now!</h1>
         <form onSubmit={handleRegister} className="space-y-5">

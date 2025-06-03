@@ -39,6 +39,7 @@ const GroupCard = ({ group }) => {
                 <div className="text-sm text-gray-700 mb-2">
                     <div><span className="font-semibold">Max Members:</span> {maxmembers}</div>
                     <div><span className="font-semibold">Location:</span> {meetingLocation}</div>
+                    <div><span className="font-semibold">Deadline:</span> {startdate}</div>
                 </div>
                 <Link to={`/groups/${_id}`}>
                     <button className='btn bg-fuchsia-900 w-full text-xl font-semibold text-white mb-2'>

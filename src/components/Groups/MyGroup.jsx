@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Link, useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 // import Lottie from 'lottie-react';
 
 const MyGroup = () => {
@@ -48,7 +49,10 @@ const MyGroup = () => {
 
     return (
         <div className='min-h-screen p-4 '>
-
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>My Group</title>
+            </Helmet>
             {userGroups.length > 0 ? (
                 <div className="overflow-x-auto w-[90%] mx-auto">
                     <table className="table shadow-md rounded-lg overflow-hidden">
@@ -80,7 +84,8 @@ const MyGroup = () => {
                 </div>
             ) : (
                 <div className="text-center text-gray-600 mt-12">
-                    <p>No groups found.</p>
+                    <p className='text-2xl text-green-800 font-bold mb-5'>No Groups Found.</p>
+                    <Link to="/creategroup" className='btn bg-[#245dd5] text-white'>GO TO CREATE GROUP</Link>
                 </div>
             )}
         </div>
