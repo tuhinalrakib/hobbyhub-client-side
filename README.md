@@ -1,7 +1,7 @@
 # 🎯 HobbyHub: A Local Hobby Group Organizer
 
 [![Live Site](https://img.shields.io/badge/Live%20Demo-0ea5e9?style=for-the-badge&logo=vercel&logoColor=white)](https://hobbyhub-apps.web.app/)
-[![GitHub Repo](https://img.shields.io/badge/View%20Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername/hobbyhub)
+[![GitHub Repo](https://img.shields.io/badge/View%20Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tuhinalrakib/hobbyhub-client-side.git)
 
 > A community-driven platform to discover and organize local hobby groups, fostering real-world connections through shared interests.
 
