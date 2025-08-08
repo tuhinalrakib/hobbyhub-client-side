@@ -1,57 +1,60 @@
-# HobbyHub: A Local Hobby Group Organizer
+# 🎯 HobbyHub: A Local Hobby Group Organizer
 
-[Live Site 🌐](https://your-live-site-url.com)  
-*A community-driven platform to discover and organize local hobby groups.*
+[![Live Site](https://img.shields.io/badge/Live%20Demo-0ea5e9?style=for-the-badge&logo=vercel&logoColor=white)](https://your-live-site-url.com)
+[![GitHub Repo](https://img.shields.io/badge/View%20Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername/hobbyhub)
+
+> A community-driven platform to discover and organize local hobby groups, fostering real-world connections through shared interests.
 
 ---
 
 ## 🌟 Features
 
-- **Discover Local Groups**  
-  Easily browse and join hobby-based communities near you—whether you're into painting, hiking, reading, or gaming.
+- **Discover Local Groups** – Browse and join hobby-based communities near you, whether you’re into painting, hiking, reading, or gaming.
+- **Create Your Own Group** – Start a new group in minutes, define your passion, set meetups, and invite members.
+- **Event Scheduling** – Organize events and manage RSVPs with intuitive scheduling tools.
+- **Member Engagement** – Group chats, interest polls, and announcements keep members connected.
+- **Location-Based Search** – Smart filtering helps match users with nearby groups sharing their interests.
 
-- **Create Your Own Group**  
-  Launch a new group with just a few clicks. Define your passion, set meetups, and invite like-minded enthusiasts.
+---
 
-- **Event Scheduling**  
-  Organize upcoming events and manage RSVPs directly through the platform with intuitive scheduling tools.
-
-- **Member Engagement**  
-  Interactive features like group chats, interest polls, and announcements keep members involved and informed.
-
-- **Location-Based Search**  
-  Smart search and filtering based on user location help match users with nearby groups that share their interests.
+## 📸 Screenshots
+<p align="center">
+  <img src="./assets/homepage.png" alt="HobbyHub Homepage" width="700">
+</p>
+<p align="center">
+  <img src="./assets/group-details.png" alt="Group Details Page" width="700">
+</p>
 
 ---
 
 ## 💡 About HobbyHub
-
-HobbyHub fosters real-world social connections through shared interests. It’s designed to break the ice, promote local activity, and build lasting friendships around hobbies that bring people joy.
+HobbyHub is designed to break the ice, promote local activity, and build lasting friendships around hobbies that bring people joy.  
+It connects people with common passions and encourages offline interactions.
 
 ---
 
 ## 🚀 Tech Stack
 
-- Frontend: React, Tailwind CSS
-- Backend: Node.js, Express
-- Database: MongoDB
-- Hosting: Vercel / Netlify / Render (update based on your deployment)
+**Frontend:**  
+- React  
+- Tailwind CSS  
+
+**Backend:**  
+- Node.js  
+- Express  
+
+**Database:**  
+- MongoDB  
+
+**Hosting:**  
+- Vercel / Netlify (frontend)  
+- Render / Railway (backend)  
 
 ---
 
-## 📬 Contributing
+## 🛠 Installation & Setup
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 📄 License
-
-[MIT](./LICENSE)
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/hobbyhub.git
+cd hobbyhub
