@@ -56,5 +56,5 @@ It connects people with common passions and encourages offline interactions.
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/hobbyhub.git
+git clone https://github.com/tuhinalrakib/hobbyhub-client-side.git
 cd hobbyhub
