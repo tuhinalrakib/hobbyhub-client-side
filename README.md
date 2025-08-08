@@ -19,10 +19,10 @@
 
 ## 📸 Screenshots
 <p align="center">
-  <img src="./assets/homepage.png" alt="HobbyHub Homepage" width="700">
+  <img src="https://i.postimg.cc/c4fcdYLB/Screenshot-2025-08-08-175131.png" alt="HobbyHub Homepage" width="700">
 </p>
 <p align="center">
-  <img src="./assets/group-details.png" alt="Group Details Page" width="700">
+  
 </p>
 
 ---
