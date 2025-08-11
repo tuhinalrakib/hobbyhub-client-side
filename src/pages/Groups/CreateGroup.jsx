@@ -1,10 +1,10 @@
 import React, { use } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import Loading from "../Loading";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet";
-const promise = fetch("https://hobbyhub-server.onrender.com/users").then(res => res.json())
+import Loading from "../../components/Loading";
+import useAuth from "../../hooks/useAuth";
+// const promise = fetch("https://hobbyhub-server.onrender.com/users").then(res => res.json())
 
 const hobbyOptions = [
     "Drawing & Painting",
@@ -18,7 +18,7 @@ const hobbyOptions = [
 ];
 
 const CreateGroup = () => {
-    const { user, loading } = use(AuthContext)
+    const { user, loading } = useAuth()
     const data = use(promise)
     const navigate = useNavigate()
 

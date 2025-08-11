@@ -1,17 +1,16 @@
 import { createBrowserRouter } from 'react-router';
 import HomeLayouts from '../Layouts/HomeLayouts';
-import Home from '../components/Home';
-import Register from '../components/User/Register';
-import AllGroup from '../components/AllGroup/AllGroup';
-import PrivateRoute from '../contexts/PrivateRoute';
-import Login from '../components/User/Login';
-import CreateGroup from '../components/Groups/CreateGroup';
-import MyGroup from '../components/Groups/MyGroup';
-import ErrorPage from '../components/ErrorPage';
-import UserProfile from '../components/User/UserProfile';
+import Home from '../pages/Home/Home';
+import ErrorPage from '../ErrorPage';
 import GroupDetails from '../components/GroupDetails';
-import UpdateGroup from '../components/Groups/UpdateGroup';
 import Loading from '../components/Loading';
+import Register from '../pages/Authentication/Register';
+import Login from '../pages/Authentication/Login';
+import AllGroup from '../pages/AllGroup/AllGroup';
+import CreateGroup from '../pages/Groups/CreateGroup';
+import MyGroup from '../pages/Groups/MyGroup';
+import UpdateGroup from '../pages/Groups/UpdateGroup';
+import PrivateRoute from '../contexts/PrivateRoute';
 
 
 const Router = createBrowserRouter([
@@ -27,7 +26,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "login",
-                element: <Login></Login>
+                element: <Login />
             },
             {
                 path: "allgroup",
@@ -62,7 +61,6 @@ const Router = createBrowserRouter([
             {
                 path: "updateGroup/:id",
                 loader: ({ params }) => fetch(`https://hobbyhub-server.onrender.com/groups/${params.id}`),
-                // loader: () => fetch(`https://hobbyhub-server.onrender.com/groups`),
                 element: <PrivateRoute><UpdateGroup /></PrivateRoute>,
                 hydrateFallbackElement: <Loading></Loading>
             }

@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const provider = new GoogleAuthProvider
-
+    const [theme, setTheme] = useState("light");
 
 
     const signUpUser = (email, password) => {
@@ -30,8 +30,8 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
-    const updateUser = (updatedData)=>{
-        return updateProfile(auth.currentUser, updatedData)
+    const updateUser = (name, photo)=>{
+        return updateProfile(auth.currentUser, {displayName : name, photoURL : photo})
     }
 
     useEffect(()=>{
@@ -52,7 +52,9 @@ const AuthProvider = ({ children }) => {
         signOutUser,
         signInUser,
         updateUser,
-        googleLogin
+        googleLogin,
+        theme,
+        setTheme
     }
 
     return <AuthContext value={authData}>

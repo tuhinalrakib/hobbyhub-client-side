@@ -1,8 +1,8 @@
 import React, { use } from 'react';
 import GroupCard from './GroupCard';
 import { AuthContext } from '../../contexts/AuthContext';
-import Loading from '../Loading';
 import { useLoaderData } from 'react-router';
+import Loading from '../../components/Loading';
 
 // const promise = .then(res => res.json())
 
@@ -10,7 +10,7 @@ const AllGroup = () => {
     const {loading} = use(AuthContext)
     const data = useLoaderData()
     if(loading){
-        return <Loading></Loading>
+        return <Loading />
     }
 
     return (

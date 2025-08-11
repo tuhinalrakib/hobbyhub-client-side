@@ -1,8 +1,8 @@
 import React, { use } from 'react';
 import { useLoaderData } from 'react-router';
-import Navbar from '../Navbar';
+import Navbar from '../../components/Navbar';
 import { AuthContext } from '../../contexts/AuthContext';
-import Loading from '../Loading';
+import Loading from '../../components/Loading';
 
 const UserProfile = () => {
     const {loading} = use(AuthContext)

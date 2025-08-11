@@ -5,37 +5,12 @@ import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router';
 
 const Navbar = () => {
-    const { user, signOutUser, loading } = useContext(AuthContext);
-    const [theme, setTheme] = useState("light");
-    const [data, setData] = useState(null);
-    const [subscriptionLoading, setSubscriptionLoading] = useState(true);
-   
-    console.log(user)
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://hobbyhub-server.onrender.com/users?email=${user?.email}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch');
-                }
-                const result = await response.json();
-                setData(result);
-            } catch (err) {
-                console.log(err.message);
-            } finally {
-                setSubscriptionLoading(false);
-            }
-        };
+    const { user, signOutUser, loading, theme, setTheme } = useContext(AuthContext);
 
-        fetchData();
-    }, [user]); // empty dependency array = runs once on mount
-
-
-    if (loading || subscriptionLoading) {
+    if (loading ) {
         return <Loading />;
     }
 
-    console.log(data)
     const toggleTheme = () => {
         const newTheme = theme === "light" ? "dark" : "light";
         setTheme(newTheme);
@@ -62,7 +37,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-[#C4B1AD] shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -83,14 +58,14 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal px-1">{links}</ul>
             </div>
             <div className="navbar-end space-x-1">
-                {user && data && (
+                {user  && (
                     <>
-                        <div className="relative group w-[70px] h-[70px] mr-3">
+                        {/* <div className="relative group w-[70px] h-[70px] mr-3">
                             <img src={data?.photo} alt="User" className="w-full h-full rounded-2xl object-cover" />
                             <h3 className="absolute top-0 left-0 w-full h-full text-white bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-50 duration-300 rounded-2xl">
                                 {data?.name}
                             </h3>
-                        </div>
+                        </div> */}
                         <button onClick={handleLogout} className="btn btn-sm md:btn">Log Out</button>
                     </>
                 )}

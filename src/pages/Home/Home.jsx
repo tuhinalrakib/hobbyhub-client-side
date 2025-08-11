@@ -1,9 +1,9 @@
 import React from "react";
 import { Typewriter } from "react-simple-typewriter";
-import FeaturedGroups from "../pages/FeaturedGroups ";
-import CommunityGuidelines from "../pages/CommunityGuidelines";
-import JoinNewsletter from "../pages/JoinNewsletter";
-import Slider from "../pages/Slider";
+import FeaturedGroups from "./FeaturedGroups ";
+import CommunityGuidelines from "./CommunityGuidelines";
+import JoinNewsletter from "./JoinNewsletter";
+import Slider from "./Slider";
 
 
 
